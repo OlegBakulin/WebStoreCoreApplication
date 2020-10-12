@@ -8,7 +8,7 @@ using WebStoreCoreApplication.ViewModels;
 
 namespace WebStoreCoreApplication.Controllers
 {
-    public class BaseController : Controller
+    public class EmployeeController : Controller
     {
         private readonly List<EmployeeViewModel> _employees = new List<EmployeeViewModel>
         {
