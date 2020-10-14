@@ -33,6 +33,8 @@ namespace WebStoreCoreApplication
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             var hello = _configuration["CustomeHelloWorld"];
 
             app.UseRouting();
@@ -42,10 +44,12 @@ namespace WebStoreCoreApplication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Base}/{action=Index}/{id?}");
-                endpoints.MapGet("/", async context =>
+                /*
+                 * endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync(hello);
                 });
+                */
             });
         }
     }
