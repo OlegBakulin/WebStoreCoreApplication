@@ -98,22 +98,22 @@
                                 <li class="dropdown">
                                     <a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><asp-controller="Base" asp-action="Shop">Products</a></li>
+                                        <li><a asp-controller="Base" asp-action="ProductDetails">Product Details</a></li>
+                                        <li><a asp-controller="Base" asp-action="Checkout">Checkout</a></li>
+                                        <li><a asp-controller="Base" asp-action="Cart">Cart</a></li>
+                                        <li><a asp-controller="Base" asp-action="Login">Login</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                        <li><a asp-controller="Base" asp-action="Blog">Blog List</a></li>
+                                        <li><a asp-controller="Base" asp-action="Blog_Single">Blog Single</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="contact-us.html">Contact</a></li>
+                                <li><a asp-controller="Base" asp-action="_404">404</a></li>
+                                <li><a asp-controller="Base" asp-action="ContactUs">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -287,13 +287,5 @@
 
     </footer><!--/Footer-->
 
-
-
-    <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/jquery.scrollUp.min.js"></script>
-    <script src="~/js/price-range.js"></script>
-    <script src="~/js/jquery.prettyPhoto.js"></script>
-    <script src="~/js/main.js"></script>
 </body>
 </html>
