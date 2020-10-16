@@ -4,45 +4,37 @@ using System.Linq;
 using System.Net.Cache;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 using WebStoreCoreApplication.ViewModels;
 
 namespace WebStoreCoreApplication.Controllers
 {
+    [Route("peoples" +
+        "")]
     public class EmployeeController : Controller
     {
-        private readonly List<EmployeeViewModel> _employees = new List<EmployeeViewModel>
+        private readonly IEmployeeService employeeService;
+
+        public EmployeeController(IEmployeeService employeeService)
         {
-            new EmployeeViewModel
-            {
-                Id = 1,
-                Name = "Петр",
-                SName = "Петров",
-                FName = "Петрович",
-                Age = 33,
-                Position ="BOSS"
-            },
-            new EmployeeViewModel
-            {
-                Id = 2,
-                Name = "Фёдр",
-                SName = "Фёдоров",
-                FName = "Фёдорович",
-                Age = 25,
-                Position ="Программист"}
-        };
+            this.employeeService = employeeService;
+        }
+
+        [Route("idx")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Route("all")]
         public IActionResult Employees()
         {
-            return View(_employees);
+            return View(employeeService.GetAll());
         }
-
+        [Route("{id}")]
         public IActionResult EmployeeDetails(int id)
         {
-            var employeeviewmodel = _employees.FirstOrDefault(x => x.Id == id);
+            var employeeviewmodel = employeeService.GetByID(id);
             if (employeeviewmodel == null) return NotFound();
             return View(employeeviewmodel);
         }
