@@ -47,6 +47,8 @@ namespace WebStoreCoreApplication
 
             var hello = _configuration["CustomeHelloWorld"];
 
+            //app.Map("/Index", CustomIndexHandler);
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -60,6 +62,30 @@ namespace WebStoreCoreApplication
                     await context.Response.WriteAsync(hello);
                 });
                 */
+            });
+        }
+        
+        private void CustomIndexHandler(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Index Custom!!!");
+            });
+        }
+
+        private void UseMiddlewareSample(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                bool isError = false;
+                if (isError)
+                {
+                    await context.Response.WriteAsync("Errrrrrrrooooooorrrrr!!!!");
+                }
+                else
+                {
+                    await next.Invoke();
+                }
             });
         }
     }

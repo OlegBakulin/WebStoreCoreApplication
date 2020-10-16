@@ -8,6 +8,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
 {
     public class EmployeeWork
     {
+        private const string correct = "1234";
         public RequestDelegate Next { get; }
 
         public EmployeeWork(RequestDelegate next)
@@ -17,7 +18,22 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var token = context.Request.Query["token"];
 
+            if (string.IsNullOrEmpty(token))
+            {
+                await Next.Invoke(context);
+                return;
+            }
+            if (token == correct)
+            {
+                await Next.Invoke(context);
+            }
+            else
+            {
+                await context.Response.WriteAsync("BAAAADDDD!!!!");
+            }
         }
+        
     }
 }
