@@ -8,9 +8,11 @@
     <title>Employees</title>
 </head>
 <body>
+    <a asp-action="Edit" class="btn btn-success">Новый сотрудник</a>
     <table class="table">
         @foreach (var item in Model)
         {
+
             <tr>
                 <td>@item.IName</td>
                 <td>@item.FName</td>

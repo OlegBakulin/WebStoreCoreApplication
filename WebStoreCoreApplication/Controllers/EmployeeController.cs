@@ -33,6 +33,7 @@ namespace WebStoreCoreApplication.Controllers
         {
             return View(_employeeService.GetAll());
         }
+       
         [Route("{id}")]
         public IActionResult EmployeeDetails(int id)
         {
@@ -78,5 +79,20 @@ namespace WebStoreCoreApplication.Controllers
             return View(model);
             */
         }
+
+         [Route("delete/{id?}")]
+        public IActionResult Delete (int id)
+        {
+            var deluser = _employeeService.GetByID(id);
+            if (deluser.Id > 0 & (!ReferenceEquals(deluser, null))) 
+            {
+                _employeeService.Delete(id);
+            }
+            return RedirectToAction(nameof(Employees));
+        }
+
+       
+        
+
     }
 }

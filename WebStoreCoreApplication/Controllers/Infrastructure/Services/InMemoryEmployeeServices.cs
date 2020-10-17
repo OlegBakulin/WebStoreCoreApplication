@@ -14,18 +14,18 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
             new EmployeeViewModel
             {
                 Id = 1,
-                Name = "Петр",
-                SName = "Петров",
-                FName = "Петрович",
+                IName = "Петр",
+                FName = "Петров",
+                OName = "Петрович",
                 Age = 33,
                 Position ="BOSS"
             },
             new EmployeeViewModel
             {
                 Id = 2,
-                Name = "Фёдр",
-                SName = "Фёдоров",
-                FName = "Фёдорович",
+                IName = "Фёдр",
+                FName = "Фёдоров",
+                OName = "Фёдорович",
                 Age = 25,
                 Position ="Программист"}
         };
