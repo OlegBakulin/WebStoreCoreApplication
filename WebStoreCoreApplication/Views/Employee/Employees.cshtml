@@ -18,6 +18,7 @@
                 <td>
                     @Html.ActionLink("Детали", "EmployeeDetails", new { id=item.Id})
                 </td>
+                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
             </tr>
         }
     </table>

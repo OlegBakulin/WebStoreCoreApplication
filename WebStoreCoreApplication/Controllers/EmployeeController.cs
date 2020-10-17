@@ -44,9 +44,29 @@ namespace WebStoreCoreApplication.Controllers
             return View(employeeviewmodel);
         }
 
+        [HttpPost]
         [Route("edit/{id?}")]
-        public IActionResult Edit (int? id)
+        public IActionResult Edit (EmployeeViewModel employeemodel) //int? id)
         {
+            if (employeemodel.Id > 0)
+            {
+                var dbitem = _employeeService.GetByID(employeemodel.Id);
+
+                if (ReferenceEquals(dbitem, null))
+                    return NotFound();
+                dbitem.IName = employeemodel.IName;
+                dbitem.FName = employeemodel.FName;
+                dbitem.OName = employeemodel.OName;
+                dbitem.Age = employeemodel.Age;
+                dbitem.Position = employeemodel.Position;
+            }
+            else
+            {
+                _employeeService.AddNew(employeemodel);
+            }
+            _employeeService.Commit();
+            return RedirectToAction(nameof(Employees));
+            /*
             if (!id.HasValue) 
                 return View(new EmployeeViewModel());
             
@@ -56,6 +76,7 @@ namespace WebStoreCoreApplication.Controllers
                 return NotFound();
 
             return View(model);
+            */
         }
     }
 }
