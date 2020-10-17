@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStoreCoreApplication.Controllers.Infrastructure;
+using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
+using WebStoreCoreApplication.Controllers.Infrastructure.Services;
 
 namespace WebStoreCoreApplication
 {
@@ -23,6 +27,15 @@ namespace WebStoreCoreApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            /*
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(SimpleActionFilter));
+            });
+            */
+
+            services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +49,9 @@ namespace WebStoreCoreApplication
             app.UseStaticFiles();
 
             var hello = _configuration["CustomeHelloWorld"];
+
+            //app.Map("/Index", CustomIndexHandler);
+            app.UseMiddleware<EmployeeWork>();
 
             app.UseRouting();
 
@@ -52,6 +68,31 @@ namespace WebStoreCoreApplication
                 */
             });
         }
+        /*
+        private void CustomIndexHandler(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Index Custom!!!");
+            });
+        }
+
+        private void UseMiddlewareSample(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                bool isError = false;
+                if (isError)
+                {
+                    await context.Response.WriteAsync("Errrrrrrrooooooorrrrr!!!!");
+                }
+                else
+                {
+                    await next.Invoke();
+                }
+            });
+        }
+        */
     }
 }
 

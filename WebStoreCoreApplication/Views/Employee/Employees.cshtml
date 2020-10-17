@@ -8,16 +8,19 @@
     <title>Employees</title>
 </head>
 <body>
+    <a asp-action="Edit" class="btn btn-success">Новый сотрудник</a>
     <table class="table">
         @foreach (var item in Model)
         {
+
             <tr>
-                <td>@item.Name</td>
-                <td>@item.SName</td>
+                <td>@item.IName</td>
                 <td>@item.FName</td>
+                <td>@item.OName</td>
                 <td>
                     @Html.ActionLink("Детали", "EmployeeDetails", new { id=item.Id})
                 </td>
+                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
             </tr>
         }
     </table>

@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebStoreCoreApplication.Controllers.Infrastructure;
 
 namespace WebStoreCoreApplication.Controllers
 {
     public class BaseController : Controller
     {
+        [SimpleActionFilter]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult _404()
+        public IActionResult NotPage()
         {
             return View();
         }
