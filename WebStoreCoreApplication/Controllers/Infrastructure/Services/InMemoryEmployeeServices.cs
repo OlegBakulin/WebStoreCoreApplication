@@ -44,7 +44,9 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
         public void Delete(int id)
         {
             var employee = GetByID(id);
-            if (employee is null) return;
+            if (employee is null) 
+                return;
+
             _employees.Remove(employee);
         }
 

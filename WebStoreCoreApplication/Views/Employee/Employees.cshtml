@@ -12,9 +12,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.SName</td>
+                <td>@item.IName</td>
                 <td>@item.FName</td>
+                <td>@item.OName</td>
                 <td>
                     @Html.ActionLink("Детали", "EmployeeDetails", new { id=item.Id})
                 </td>

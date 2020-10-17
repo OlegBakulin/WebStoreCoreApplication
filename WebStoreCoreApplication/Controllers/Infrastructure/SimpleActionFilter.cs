@@ -10,12 +10,14 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return;
         }
         
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return;
         }
 
     }

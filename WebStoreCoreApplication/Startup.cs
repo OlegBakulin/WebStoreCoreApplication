@@ -27,10 +27,13 @@ namespace WebStoreCoreApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddMvc(option =>
+
+            /*
+            services.AddMvc(options =>
             {
-                option.Filters.Add(typeof(SimpleActionFilter));
+                options.Filters.Add(typeof(SimpleActionFilter));
             });
+            */
 
             services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
         }
@@ -48,6 +51,7 @@ namespace WebStoreCoreApplication
             var hello = _configuration["CustomeHelloWorld"];
 
             //app.Map("/Index", CustomIndexHandler);
+            app.UseMiddleware<EmployeeWork>();
 
             app.UseRouting();
 
@@ -64,7 +68,7 @@ namespace WebStoreCoreApplication
                 */
             });
         }
-        
+        /*
         private void CustomIndexHandler(IApplicationBuilder app)
         {
             app.Run(async context =>
@@ -88,6 +92,7 @@ namespace WebStoreCoreApplication
                 }
             });
         }
+        */
     }
 }
 

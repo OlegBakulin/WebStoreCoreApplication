@@ -7,12 +7,14 @@ using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 using WebStoreCoreApplication.ViewModels;
+using WebStoreCoreApplication.Controllers;
 
 namespace WebStoreCoreApplication.Controllers
 {
     [Route("peoples")]
     public class EmployeeController : Controller
     {
+
         private readonly IEmployeeService _employeeService;
 
         public EmployeeController(IEmployeeService employeeService)
@@ -35,19 +37,24 @@ namespace WebStoreCoreApplication.Controllers
         public IActionResult EmployeeDetails(int id)
         {
             var employeeviewmodel = _employeeService.GetByID(id);
-            if (employeeviewmodel == null) return NotFound();
+           
+            if (employeeviewmodel == null) 
+                return NotFound();
+            
             return View(employeeviewmodel);
         }
 
-        [HttpGet]
         [Route("edit/{id?}")]
-        public IActionResult Editor (int? id)
+        public IActionResult Edit (int? id)
         {
             if (!id.HasValue) 
                 return View(new EmployeeViewModel());
+            
             var model = _employeeService.GetByID(id.Value);
+            
             if (model == null)
                 return NotFound();
+
             return View(model);
         }
     }

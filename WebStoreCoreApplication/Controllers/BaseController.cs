@@ -9,6 +9,7 @@ namespace WebStoreCoreApplication.Controllers
 {
     public class BaseController : Controller
     {
+        [SimpleActionFilter]
         public IActionResult Index()
         {
             return View();
