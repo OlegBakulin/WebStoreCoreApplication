@@ -9,15 +9,14 @@ using WebStoreCoreApplication.ViewModels;
 
 namespace WebStoreCoreApplication.Controllers
 {
-    [Route("peoples" +
-        "")]
+    [Route("peoples")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService employeeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeSSService)
         {
-            this.employeeService = employeeService;
+           employeeService = employeeSSService;
         }
 
         [Route("idx")]
@@ -31,12 +30,112 @@ namespace WebStoreCoreApplication.Controllers
         {
             return View(employeeService.GetAll());
         }
+
         [Route("{id}")]
         public IActionResult EmployeeDetails(int id)
         {
             var employeeviewmodel = employeeService.GetByID(id);
             if (employeeviewmodel == null) return NotFound();
             return View(employeeviewmodel);
+        }
+
+        [HttpGet]
+        [Route("NewPeople")]
+        public IActionResult NewUser()
+        {
+            int maxid = 0;
+            foreach (var idempl in employeeService.GetAll())
+            {
+                maxid = idempl.Id;
+            }
+            return View(new EmployeeViewModel { 
+                Id = maxid + 1,
+                IName = "Имя",
+                FName = "Фамилия",
+                Age = 18,
+                OName = null,
+                Position = "Должность"
+            });
+           
+        }
+
+        [HttpPost]
+        [Route("NewPeople")]
+        public IActionResult NewUser(EmployeeViewModel model)
+        {
+            var dbItem = new EmployeeViewModel();// employeeService.GetByID(model.Id);
+            dbItem.Id = model.Id;
+            dbItem.IName = model.IName;
+            dbItem.FName = model.FName;
+            dbItem.Age = model.Age;
+            dbItem.OName = model.OName;
+            dbItem.Position = model.Position;
+            employeeService.AddNew(dbItem);
+            employeeService.Commit();
+            return RedirectToAction(nameof(Employees));
+
+        }
+
+        [HttpGet]
+        [Route("edit/{id?}")]
+        public IActionResult Edit (int? id)
+        {
+            if (!id.HasValue)
+                return View(new EmployeeViewModel());
+
+            var model = employeeService.GetByID(id.Value);
+            if (model == null)
+                return NotFound(); //404
+
+            return View(model);
+        }
+
+        public IActionResult List2 ()
+        {
+            return View();
+        }
+
+        [Route("delete/{id}")]
+        public IActionResult Delete (int id)
+        {
+            employeeService.Delete(id);
+            return RedirectToAction(nameof(Employees));
+        }
+
+        [HttpPost]
+        [Route("edit/{id?}")]
+        public IActionResult Edit(EmployeeViewModel model)
+        {
+            if (model.Age < 18 || model.Age > 100)
+            {
+                ModelState.AddModelError("Age", "Ошибка возраста!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (model.Id > 0)
+            {
+                var dbItem = employeeService.GetByID(model.Id);
+
+                //if (ReferenceEquals(dbItem, null)) return NotFound();// 404
+
+                dbItem.IName = model.IName;
+                dbItem.FName = model.FName;
+                dbItem.Age = model.Age;
+                dbItem.OName = model.OName;
+                dbItem.Position = model.Position;
+            }
+            else 
+            {
+                employeeService.AddNew(model);
+            }
+
+            employeeService.Commit();
+
+            return RedirectToAction(nameof(Employees));
         }
     }
 }
