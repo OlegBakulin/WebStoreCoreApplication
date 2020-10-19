@@ -2,11 +2,11 @@
 <html lang="en">
 
 <body>
-    @Html.Partial("Head")<!--/header-->
+    @await Html.PartialAsync("Head")<!--/header-->
 
     @RenderBody()
 
-    @Html.Partial("Foot")<!--/Footer-->
+    @await Html.PartialAsync("Foot")<!--/Footer-->
 
 </body>
 </html>
