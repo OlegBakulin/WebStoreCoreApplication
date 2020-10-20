@@ -276,12 +276,12 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
 
         public IEnumerable<Brand> GetBrands()
         {
-            throw new NotImplementedException();
+            return _brands;
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            throw new NotImplementedException();
+            return _categories;
         }
     }
 }

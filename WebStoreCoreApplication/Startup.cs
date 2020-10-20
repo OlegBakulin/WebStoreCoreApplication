@@ -33,6 +33,7 @@ namespace WebStoreCoreApplication
             });
 
             services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
+            services.AddSingleton<IProductServices, InMemoryProductServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
