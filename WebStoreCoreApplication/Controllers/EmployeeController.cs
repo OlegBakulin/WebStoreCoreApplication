@@ -89,7 +89,7 @@ namespace WebStoreCoreApplication.Controllers
 
             return View(model);
         }
-
+        [Route("list2")]
         public IActionResult List2 ()
         {
             return View();

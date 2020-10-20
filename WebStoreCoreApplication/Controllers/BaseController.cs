@@ -49,15 +49,7 @@ namespace WebStoreCoreApplication.Controllers
             return View();
         }
 
-        public IActionResult ProductDetails()
-        {
-            return View();
-        }
-
-        public IActionResult Shop()
-        {
-            return View();
-        }
+        
 
     }
 }
