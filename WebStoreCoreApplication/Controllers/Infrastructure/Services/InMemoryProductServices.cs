@@ -27,7 +27,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
                 {
                     Id = 2,
                     Name = "Nike",
-                    Order = 0,
+                    Order = 1,
                     ParentId = 1
                 },
                 new Category()

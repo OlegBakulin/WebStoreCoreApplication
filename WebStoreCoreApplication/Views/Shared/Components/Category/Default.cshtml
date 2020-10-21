@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebStoreCoreApplication.ViewModels.CategoryViewModel>
-    <h2>Category</h2>
+    
     <div class="panel-group category-products" id="accordian">
-
+        <h2>Category</h2>
         @foreach (var parentCategory in Model)
         {
             if (parentCategory.ChildCategories.Count > 0)
