@@ -232,7 +232,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
                 new Brand()
                 {
                     Id = 1,
-                    Name = "Acne",
+                    Name = "Acne 5",
                     Order = 0
                 },
                 new Brand()
