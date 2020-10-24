@@ -14,7 +14,7 @@ namespace WebStoreCoreApplication.Controllers
             return View();
         }
 
-        public IActionResult _404()
+        public IActionResult Page404()
         {
             return View();
         }
