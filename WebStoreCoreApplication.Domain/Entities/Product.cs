@@ -4,7 +4,7 @@ using WebStoreCoreApplication.Domain.Entities.Base.Interfaces;
 
 namespace WebStoreCoreApplication.Domain.Entities
 {
-    [Table("Product")]
+    [Table("Products")]
     public class Product : NameEntity, IOrderEntity
     {
         public int Order { get; set; }
@@ -14,7 +14,7 @@ namespace WebStoreCoreApplication.Domain.Entities
         public decimal Price { get; set; }
         //public string Manufacturer { get; set; }
 
-        [ForeignKey("CategoryId")]
+        [ForeignKey("CategoryID")]
         public virtual Category Category { get; set; }
 
         [ForeignKey("BrandId")]
