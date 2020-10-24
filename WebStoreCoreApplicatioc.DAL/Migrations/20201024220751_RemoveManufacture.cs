@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebStore.DAL.Migrations
+namespace WebStoreCoreApplicatioc.DAL.Migrations
 {
-    public partial class RemovedProductManufacturer : Migration
+    public partial class RemoveManufacture : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

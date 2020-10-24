@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStoreCoreApplicatioc.DAL;
 
-namespace WebStore.DAL.Migrations
+namespace WebStoreCoreApplicatioc.DAL.Migrations
 {
     [DbContext(typeof(WebStoreContext))]
-    [Migration("20201022183419_IdentityAdded")]
-    partial class IdentityAdded
+    [Migration("20201024214613_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,7 +152,7 @@ namespace WebStore.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Brand", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,10 +167,10 @@ namespace WebStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Category", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,6 +181,9 @@ namespace WebStore.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentCategoryID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ParentId")
@@ -188,12 +191,12 @@ namespace WebStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentCategoryID");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Product", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,6 +204,12 @@ namespace WebStore.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BrandIdForeigen")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryIDForeigen")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -215,19 +224,19 @@ namespace WebStore.DAL.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("BrandIdForeigen");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryIDForeigen");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.User", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -303,7 +312,7 @@ namespace WebStore.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WebStore.Domain.Entities.User", null)
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,7 +321,7 @@ namespace WebStore.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WebStore.Domain.Entities.User", null)
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -327,7 +336,7 @@ namespace WebStore.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebStore.Domain.Entities.User", null)
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,31 +345,29 @@ namespace WebStore.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WebStore.Domain.Entities.User", null)
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Category", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("WebStore.Domain.Entities.Category", "ParentCategory")
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "ParentCategory")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentCategoryID");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Product", b =>
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("WebStore.Domain.Entities.Brand", "Brand")
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandIdForeigen");
 
-                    b.HasOne("WebStore.Domain.Entities.Category", "Category")
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryIDForeigen");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,13 +11,13 @@ namespace WebStoreCoreApplication.Domain.Entities
         public int CategoryId { get; set; }
         public int? BrandId { get; set; }
         public string ImageUrl { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         //public string Manufacturer { get; set; }
-
-        [ForeignKey("CategoryID")]
+        public int Size { get; set; }
+        [ForeignKey("CategoryIDForeigen")]
         public virtual Category Category { get; set; }
 
-        [ForeignKey("BrandId")]
+        [ForeignKey("BrandIdForeigen")]
         public virtual Brand Brand { get; set; }
 
     }
