@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WebStoreCoreApplication.Domain.Entities.Base.Interfaces;
 namespace WebStoreCoreApplication.ViewModels
 {
-    public class BrandViewModel : INameEntity, IOrderEntity
+    public class BrandViewModel : INamedEntity, IOrderEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

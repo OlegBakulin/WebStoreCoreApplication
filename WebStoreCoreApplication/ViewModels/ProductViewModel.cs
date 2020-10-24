@@ -2,7 +2,7 @@
 
 namespace WebStoreCoreApplication.ViewModels
 {
-    public class ProductViewModel : INameEntity, IOrderEntity
+    public class ProductViewModel : INamedEntity, IOrderEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

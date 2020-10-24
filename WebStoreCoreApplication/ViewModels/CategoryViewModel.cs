@@ -6,7 +6,7 @@ using WebStoreCoreApplication.Domain.Entities.Base.Interfaces;
 
 namespace WebStoreCoreApplication.ViewModels
 {
-    public class CategoryViewModel : INameEntity, IOrderEntity
+    public class CategoryViewModel : INamedEntity, IOrderEntity
     {
         public CategoryViewModel()
         {
