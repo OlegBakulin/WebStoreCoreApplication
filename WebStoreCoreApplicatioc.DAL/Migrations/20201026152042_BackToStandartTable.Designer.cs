@@ -10,8 +10,8 @@ using WebStoreCoreApplicatioc.DAL;
 namespace WebStoreCoreApplicatioc.DAL.Migrations
 {
     [DbContext(typeof(WebStoreContext))]
-    [Migration("20201026144108_ProductTableRestart")]
-    partial class ProductTableRestart
+    [Migration("20201026152042_BackToStandartTable")]
+    partial class BackToStandartTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

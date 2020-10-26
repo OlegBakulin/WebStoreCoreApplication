@@ -2,7 +2,7 @@
 
 namespace WebStoreCoreApplicatioc.DAL.Migrations
 {
-    public partial class ProductTableRestart : Migration
+    public partial class New : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
