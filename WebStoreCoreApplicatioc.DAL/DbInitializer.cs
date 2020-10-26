@@ -275,7 +275,7 @@ namespace WebStoreCoreApplicatioc.DAL
                     Order = 6
                 },
             };
-            var products = new List<Product>()
+            var Products = new List<Product>()
             {
                 new Product()
         {
@@ -421,16 +421,16 @@ namespace WebStoreCoreApplicatioc.DAL
                     context.Brands.Add(brand);
                 }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] ON");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brand] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] OFF");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brand] OFF");
                 trans.Commit();
             }
 
             
             using (var trans = context.Database.BeginTransaction())
             {
-                foreach (var product in products)
+                foreach (var product in Products)
                 {
                     context.Products.Add(product);
                 }

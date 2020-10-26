@@ -7,7 +7,7 @@ using WebStoreCoreApplicatioc.DAL;
 using WebStoreCoreApplication.Domain.Entities;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 
-namespace WebStore.Infrastructure.Services
+namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
 {
     public class SqlProductService : IProductServices
     {
