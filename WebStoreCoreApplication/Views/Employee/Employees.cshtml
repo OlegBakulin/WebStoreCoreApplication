@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<WebStoreCoreApplication.ViewModels.EmployeeViewModel>
-
+@{ 
+    var isAdmin = User.IsInRole("Admins");
+}
 <!DOCTYPE html>
 
 <html>
@@ -25,7 +27,7 @@
                     @Html.ActionLink("Редактировать", "Edit", new { id = item.Id })
                 </td>
                 <td>
-                    <a asp-action="Delete"asp-route-id = "@item.Id"><i class="fa fa-cut"> Увольнение</i> </a>
+                    <a asp-action="Delete" asp-route-id = "@item.Id"><i class="fa fa-cut"> Увольнение</i> </a>
                 </td>
             </tr>
         }

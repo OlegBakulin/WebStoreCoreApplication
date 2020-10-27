@@ -24,6 +24,7 @@ namespace WebStoreCoreApplication
                 {
                     WebStoreContext context = services.GetRequiredService<WebStoreContext>();
                     DbInitializer.Initializer(context);
+                    DbInitializer.InitializeUsers(context);
                 }
                 catch (Exception ex)
                 {

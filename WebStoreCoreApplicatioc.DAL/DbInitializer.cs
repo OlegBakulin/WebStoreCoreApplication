@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using WebStoreCoreApplication.Domain.Entities;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebStoreCoreApplicatioc.DAL
 {
@@ -440,5 +441,29 @@ namespace WebStoreCoreApplicatioc.DAL
                 trans.Commit();
             }
         }
+
+        public static void InitializeUsers(IServiceProvider context)
+        {
+            var roleManager = services.GetService<RoleManager<IdentityRole>>();
+            EnsureRole(roleManager, "User");
+            EnsureRole(roleManager, "Admins");
+
+            EnsureRoleToUser(services, "Admin", "Admins", "admin@123");
+        }
+
+        private static void EnsureRoleToUser(object services, string v1, string v2, string v3)
+        {
+            var userManager = services.GetService<UserManager<User>>();
+        }
+
+        private static void EnsureRole(RoleManager<IdentityRole> roleManager, string v)
+        {
+            if (!roleManager.RoleExistsAsync(roleName).Result)
+            {
+                roleManager.CreatAsync(new IdentityRole(roleName)).Wait();
+            }
+        }
+
+        
     }
 }

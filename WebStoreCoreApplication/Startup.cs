@@ -28,7 +28,7 @@ namespace WebStoreCoreApplication
         {
             _configuration = configuration;
         }
-       
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -39,7 +39,7 @@ namespace WebStoreCoreApplication
 
             services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
             services.AddScoped<IProductServices, SqlProductService>();
-            
+
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
@@ -88,8 +88,14 @@ namespace WebStoreCoreApplication
 
             var hello = _configuration["CustomeHelloWorld"];
 
+            UseMiddlewareSample(app);
+
+            app.UseMiddleware<TokenMiddleware>();
+
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -101,6 +107,36 @@ namespace WebStoreCoreApplication
                     await context.Response.WriteAsync(hello);
                 });
                 */
+            });
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Привет из конвейера обработки запроса (метод app.Run())");
+            });
+        }
+
+        private void UseMiddlewareSample(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                bool isError = false;
+                // ...
+                if (isError)
+                {
+                    await context.Response
+                        .WriteAsync("Error occured. You're in custom pipeline module...");
+                }
+                else
+                {
+                    await next.Invoke();
+                }
+            });
+        }
+
+        private void CustomIndexHandler(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Index custom handler...");
             });
         }
     }
