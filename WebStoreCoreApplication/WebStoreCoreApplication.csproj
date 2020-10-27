@@ -5,12 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Account\Logout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\fontawesome-webfont.svg" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\fontawesome-webfont.woff" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\FontAwesome.otf" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Account\Logout.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
   </ItemGroup>

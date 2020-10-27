@@ -47,11 +47,13 @@ namespace WebStoreCoreApplication.Controllers
             return RedirectToAction("Index", "Base");
         }
 
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
@@ -76,7 +78,9 @@ namespace WebStoreCoreApplication.Controllers
             return RedirectToAction("Index", "Base");
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
+        [Route("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
