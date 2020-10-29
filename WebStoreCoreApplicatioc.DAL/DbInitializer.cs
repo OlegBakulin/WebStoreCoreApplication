@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace WebStoreCoreApplicatioc.DAL
 {
-    public class DbInitializer
+    public static class DbInitializer
     {
         public static void Initialize(WebStoreContext context)
         {
@@ -448,9 +448,11 @@ namespace WebStoreCoreApplicatioc.DAL
         {
             var roleManager = services.GetService<RoleManager<IdentityRole>>();
             EnsureRole(roleManager, "User");
-            EnsureRole(roleManager, "Admins");
+            EnsureRole(roleManager, "Manager");
+            EnsureRole(roleManager, "Admin");
+            EnsureRole(roleManager, "Boss");
 
-            EnsureRoleToUser(services, "Admin", "Admins", "admin@123");
+            EnsureRoleToUser(services, "Administrator", "Admin", "administrator@123");
         }
 
         private static void EnsureRoleToUser(IServiceProvider services, string userName, string roleName, string password)

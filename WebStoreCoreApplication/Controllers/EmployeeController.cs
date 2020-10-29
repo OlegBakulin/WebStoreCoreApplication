@@ -18,15 +18,15 @@ namespace WebStoreCoreApplication.Controllers
 
         public EmployeeController(IEmployeeService employeeSSService)
         {
-           employeeService = employeeSSService;
+            employeeService = employeeSSService;
         }
-
+        [AllowAnonymous]
         [Route("idx")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [AllowAnonymous]
         [Route("all")]
         public IActionResult Employees()
         {
@@ -34,6 +34,7 @@ namespace WebStoreCoreApplication.Controllers
         }
 
         [Route("{id}")]
+        [Authorize(Roles = "Boss, Admin, Manager")]
         public IActionResult EmployeeDetails(int id)
         {
             var employeeviewmodel = employeeService.GetByID(id);
@@ -42,6 +43,7 @@ namespace WebStoreCoreApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Boss, Admin")]
         [Route("NewPeople")]
         public IActionResult NewUser()
         {
@@ -50,7 +52,7 @@ namespace WebStoreCoreApplication.Controllers
             {
                 maxid = idempl.Id;
             }
-            return View(new EmployeeViewModel { 
+            return View(new EmployeeViewModel {
                 Id = maxid + 1,
                 IName = "Имя",
                 FName = "Фамилия",
@@ -58,10 +60,11 @@ namespace WebStoreCoreApplication.Controllers
                 OName = null,
                 Position = "Должность"
             });
-           
+
         }
 
         [HttpPost]
+        [Authorize(Roles = "Boss, Admin")]
         [Route("NewPeople")]
         public IActionResult NewUser(EmployeeViewModel model)
         {
@@ -80,6 +83,7 @@ namespace WebStoreCoreApplication.Controllers
 
         [HttpGet]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "Boss, Admin")]
         public IActionResult Edit (int? id)
         {
             if (!id.HasValue)
@@ -98,6 +102,7 @@ namespace WebStoreCoreApplication.Controllers
         }
 
         [Route("delete/{id}")]
+        [Authorize(Roles = "Boss, Admin")]
         public IActionResult Delete (int id)
         {
             employeeService.Delete(id);
@@ -105,6 +110,7 @@ namespace WebStoreCoreApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Boss, Admin")]
         [Route("edit/{id?}")]
         public IActionResult Edit(EmployeeViewModel model)
         {

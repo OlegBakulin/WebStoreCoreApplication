@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<WebStoreCoreApplication.ViewModels.EmployeeViewModel>
 @{ 
-    var isAdmin = User.IsInRole("Admins");
+    var isAdmin = User.IsInRole("Admin");
+    var isBoss = User.IsInRole("Boss");
+    var isManager = User.IsInRole("Manager");
 }
 <!DOCTYPE html>
 
@@ -11,26 +13,35 @@
 </head>
 <body>
     <td>
+        @if (isAdmin || isBoss)
+         {
         <a asp-action="NewUser" class="btn btn-success">Новенький</a>
+         }
     </td>
     <table class="table">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.IName</td>
-                <td>@item.FName</td>
-                <td>@item.OName</td>
+        <tr>
+            <td>@item.IName</td>
+            <td>@item.FName</td>
+            <td>@item.OName</td>
+            @if (isAdmin || isBoss || isManager)
+            {
                 <td>
                     @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.Id })
                 </td>
-                <td>
-                    @Html.ActionLink("Редактировать", "Edit", new { id = item.Id })
+               @if (isAdmin || isBoss)
+               {
+                    <td>
+                        @Html.ActionLink("Редактировать", "Edit", new { id = item.Id })
+                    </td>
+                 <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-cut"> Увольнение</i> </a>
                 </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id = "@item.Id"><i class="fa fa-cut"> Увольнение</i> </a>
-                </td>
+               }
+            }
             </tr>
-        }
+         }
     </table>
 </body>
 </html>
