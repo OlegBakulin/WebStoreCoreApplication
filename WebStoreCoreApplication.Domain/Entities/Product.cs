@@ -11,7 +11,7 @@ namespace WebStoreCoreApplication.Domain.Entities
         public int CategoryId { get; set; }
         public int? BrandId { get; set; }
         public string ImageUrl { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         //public string Manufacturer { get; set; }
         public int Size { get; set; }
         [ForeignKey("CategoryIDForeigen")]

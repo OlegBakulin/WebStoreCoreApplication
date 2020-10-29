@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
+using WebStoreCoreApplication.Domain.Entities;
+using WebStoreCoreApplication.ViewModels;
 
 namespace WebStoreCoreApplication.Controllers
 {
@@ -21,14 +23,33 @@ namespace WebStoreCoreApplication.Controllers
             return View();
         }
 
-        public IActionResult ProductDetails()
+        public IActionResult ProductDetails(int id)
         {
-            return View();
+            var product = _productServices.GetProductById(id);
+            if (product == null) return NotFound();
+            return View(product);
         }
 
-        public IActionResult Shop()
+        public IActionResult Shop(int? categoryId, int? brandId)
         {
-            return View();
+            var products = _productServices.GetProducts(
+                new ProductFilter { BrandId = brandId, CategoryId = categoryId });
+
+            var model = new CatalogViewModel()
+            {
+                BrandId = brandId,
+                CategoryId = categoryId,
+                Products = products.Select(pr => new ProductViewModel()
+                {
+                    Id = pr.Id,
+                    ImageUrl = pr.ImageUrl,
+                    Name = pr.Name,
+                    Order = pr.Order,
+                    Price = pr.Price
+                }).OrderBy(p => p.Order).ToList()
+            };
+
+            return View(model);
         }
     }
 }

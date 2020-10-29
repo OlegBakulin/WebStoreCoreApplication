@@ -409,6 +409,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
         {
             return _categories;
         }
+               
 
         public IEnumerable<Product> GetProducts(ProductFilter filter)
         {
@@ -424,6 +425,12 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
                 .ToList();
 
         return products;
+        }
+        
+        public Product GetProductById(int id)
+        {
+            var products = _products;
+            return products.ElementAt(id);
         }
 
 }

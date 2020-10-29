@@ -1,4 +1,6 @@
-﻿namespace WebStoreCoreApplication.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace WebStoreCoreApplication.Domain.Entities
 {
     /// <summary>
     /// Класс для фильтрации товаров
@@ -7,5 +9,6 @@
     {
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
+        public List<int> Ids { get; set; }
     }
 }

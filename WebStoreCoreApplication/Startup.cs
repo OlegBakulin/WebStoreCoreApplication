@@ -39,6 +39,7 @@ namespace WebStoreCoreApplication
 
             services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
             services.AddScoped<IProductServices, SqlProductService>();
+            services.AddScoped<IOrdersService, SqlOrdersService>();
 
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
@@ -88,7 +89,7 @@ namespace WebStoreCoreApplication
 
             var hello = _configuration["CustomeHelloWorld"];
 
-            UseMiddlewareSample(app);
+            
 
             app.UseMiddleware<TokenMiddleware>();
 
@@ -96,8 +97,12 @@ namespace WebStoreCoreApplication
 
             app.UseAuthentication();
             app.UseAuthorization();
+            UseMiddlewareSample(app);
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Base}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Base}/{action=Index}/{id?}");

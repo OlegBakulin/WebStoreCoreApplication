@@ -18,6 +18,13 @@
     <None Include="Views\Account\Logout.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
+    <None Include="Views\Cart\Details.cshtml" />
+    <None Include="Views\Cart\OrderConfirmed.cshtml" />
+    <None Include="Views\Cart\_OrderPartial.cshtml" />
+    <None Include="Views\Profile\Index.cshtml" />
+    <None Include="Views\Profile\Orders.cshtml" />
+    <None Include="Views\Profile\Partial\_ProfileLayout.cshtml" />
+    <None Include="Views\Profile\Partial\_ProfileMenu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +58,12 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\admin\" />
+    <Folder Include="wwwroot\Areas\Admin\Models\" />
+    <Folder Include="wwwroot\Areas\Admin\Data\" />
   </ItemGroup>
 
 </Project>

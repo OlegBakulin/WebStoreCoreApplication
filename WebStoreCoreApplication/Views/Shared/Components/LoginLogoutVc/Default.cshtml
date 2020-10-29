@@ -1,6 +1,10 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <span>Приветствуем вас, @User.Identity.Name</span>
+    <span>Приветствуем вас, 
+        <a asp-action="Index" asp-controller="Profile">
+            @User.Identity.Name
+        </a>
+    </span>
     
     //таким образом хотел сделать я выход 
     //<input type="submit" asp-action="Logout" asp-controller="Account" class="btn btn-default" value="Выход"/>
