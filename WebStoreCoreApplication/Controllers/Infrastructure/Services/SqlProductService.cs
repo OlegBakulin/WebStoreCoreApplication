@@ -42,6 +42,9 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
 
         public Product GetProductById(int id)
         {
+            //Мой Вариант ДЗ 7
+            //var product = _context.Products.ElementAt(id);
+            //return product;
             var product = _context.Products.Include(p => p.Category).Include(p => p.Brand).FirstOrDefault(x => x.Id == id); ;
             return product;
         }
