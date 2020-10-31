@@ -9,8 +9,7 @@ using WebStoreCoreApplication.ViewModels;
 
 namespace WebStoreCoreApplication.Controllers
 {
-    
-    public class CatalogController : Controller
+        public class CatalogController : Controller
     {
         private readonly IProductServices _productServices;
 
@@ -27,13 +26,26 @@ namespace WebStoreCoreApplication.Controllers
         {
             var product = _productServices.GetProductById(id);
             if (product == null) return NotFound();
+            /*
+            Мой вариант дз 7
             return View(product);
+            */
+
+            return View(new ProductViewModel
+            {
+                Id = product.Id,
+                ImageUrl = product.ImageUrl,
+                Name = product.Name,
+                Order = product.Order,
+                Price = product.Price,
+                BrandName = product.Brand?.Name ?? string.Empty
+            });
+
         }
 
         public IActionResult Shop(int? categoryId, int? brandId)
         {
-            var products = _productServices.GetProducts(
-                new ProductFilter { BrandId = brandId, CategoryId = categoryId });
+            var products = _productServices.GetProducts(new ProductFilter { BrandId = brandId, CategoryId = categoryId });
 
             var model = new CatalogViewModel()
             {

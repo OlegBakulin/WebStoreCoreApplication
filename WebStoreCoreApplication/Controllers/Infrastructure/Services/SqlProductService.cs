@@ -31,7 +31,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
 
         public IEnumerable<Product> GetProducts(ProductFilter filter)
         {
-            var contextProducts = _context.Products.Include("Category").Include("Brand").AsQueryable();
+            var contextProducts = _context.Products.Include(p => p.Category).Include(p => p.Brand).AsQueryable();
             if (filter.BrandId.HasValue)
                 contextProducts.Where(c => c.BrandId.HasValue && c.BrandId.Value.Equals(filter.BrandId.Value));
             if (filter.CategoryId.HasValue)
@@ -43,10 +43,9 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
         public Product GetProductById(int id)
         {
             //Мой Вариант ДЗ 7
-            //var product = _context.Products.ElementAt(id);
+            //var product = _context.Products.Include("Category").Include("Brand");
             //return product;
-            var product = _context.Products.Include(p => p.Category).Include(p => p.Brand).FirstOrDefault(x => x.Id == id); ;
-            return product;
+            return _context.Products.Include(p => p.Category).Include(p => p.Brand).FirstOrDefault(x => x.Id == id);
         }
     }
 }

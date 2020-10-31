@@ -21,7 +21,6 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
         {
             var token = context.Request.Query["referenceToken"];
 
-            // если нет токена, то ничего не делаем, передаем запрос дальше по конвейеру
             if (string.IsNullOrEmpty(token))
             {
                 await Next.Invoke(context);
@@ -29,7 +28,6 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
             }
             if (token == correctToken)
             {
-                // обрабатываем токен...
                 await Next.Invoke(context);
             }
             else

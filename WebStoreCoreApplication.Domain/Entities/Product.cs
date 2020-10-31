@@ -12,8 +12,7 @@ namespace WebStoreCoreApplication.Domain.Entities
         public int? BrandId { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
-        //public string Manufacturer { get; set; }
-        public int Size { get; set; }
+        //public int Size { get; set; }
         [ForeignKey("CategoryIDForeigen")]
         public virtual Category Category { get; set; }
 
