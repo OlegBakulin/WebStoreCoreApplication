@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStoreCoreApplicatioc.DAL;
 
 namespace WebStoreCoreApplicatioc.DAL.Migrations
 {
     [DbContext(typeof(WebStoreContext))]
-    partial class WebStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201101101658_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,12 +183,15 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ParentCategoryID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentCategoryID");
 
                     b.ToTable("Categories");
                 });
@@ -258,6 +263,12 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                     b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BrandIdForeigen")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryIDForeigen")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -275,9 +286,9 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("BrandIdForeigen");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryIDForeigen");
 
                     b.ToTable("Products");
                 });
@@ -402,7 +413,7 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                 {
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "ParentCategory")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentCategoryID");
                 });
 
             modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Order", b =>
@@ -427,13 +438,11 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                 {
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandIdForeigen");
 
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryIDForeigen");
                 });
 #pragma warning restore 612, 618
         }

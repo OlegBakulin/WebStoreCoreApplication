@@ -15,6 +15,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Base\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Base\Index2.cshtml" />
+    <None Include="Areas\Admin\Views\Base\Index3.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Views\Account\Logout.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
@@ -61,10 +72,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\admin\" />
     <Folder Include="wwwroot\Areas\Admin\Models\" />
     <Folder Include="wwwroot\Areas\Admin\Data\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
 

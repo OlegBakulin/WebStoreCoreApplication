@@ -34,6 +34,7 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure
             {
                 await context.Response.WriteAsync("Token is incorrect");
             }
+            return;
         }
     }
 }

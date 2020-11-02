@@ -41,7 +41,8 @@ namespace WebStoreCoreApplication
             services.AddScoped<IProductServices, SqlProductService>();
             services.AddScoped<IOrdersService, SqlOrdersService>();
 
-            services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<WebStoreContext>(options => options
+                .UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<WebStoreContext>()
@@ -76,6 +77,8 @@ namespace WebStoreCoreApplication
                 options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
                 options.SlidingExpiration = true;
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICartService, CookieCartService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -87,32 +90,36 @@ namespace WebStoreCoreApplication
 
             app.UseStaticFiles();
 
-            var hello = _configuration["CustomeHelloWorld"];
-
-            
-
-            app.UseMiddleware<TokenMiddleware>();
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            var hello = _configuration["CustomHelloWorld"];
+           
+            app.Map("/index", CustomIndexHandler);
+
             UseMiddlewareSample(app);
+
+            app.UseMiddleware<TokenMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Base}/{action=Index}/{id?}");
+
+                //endpoints.MapDefaultControllerRoute(); 
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Base}/{action=Index}/{id?}");
-                /*
-                 * endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync(hello);
-                });
-                */
+
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync(hello);
+                //});
             });
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Привет из конвейера обработки запроса (метод app.Run())");
@@ -134,6 +141,7 @@ namespace WebStoreCoreApplication
                 {
                     await next.Invoke();
                 }
+                
             });
         }
 

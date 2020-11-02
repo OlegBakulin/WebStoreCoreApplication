@@ -430,9 +430,11 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Services
         public Product GetProductById(int id)
         {
 
-            //Часть ДЗ 7, которое то же не 
+            /*Часть ДЗ 7, которое то же не 
             var products = _products;
             return products.ElementAt(id);
+            */
+            return _products.FirstOrDefault(x => x.Id == id);
         }
 
 }
