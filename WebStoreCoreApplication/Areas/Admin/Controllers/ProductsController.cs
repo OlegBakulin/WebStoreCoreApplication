@@ -8,11 +8,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebStoreCoreApplicatioc.DAL;
 using WebStoreCoreApplication.Domain.Entities;
+using System.IO;
+using System.Drawing;
+using System.Reflection;
+using System.Security.Permissions;
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
+using System.Data;
 
 namespace WebStoreCoreApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admins")]
+    [Authorize(Roles = "Boss, Admin, Manager")]
     public class ProductsController : Controller
     {
         private readonly WebStoreContext _context;
@@ -52,6 +59,7 @@ namespace WebStoreCoreApplication.Areas.Admin.Controllers
         // GET: Admin/Products/Create
         public IActionResult Create()
         {
+            
             ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id");
             ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id");
             return View();
@@ -66,6 +74,39 @@ namespace WebStoreCoreApplication.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                #region LoadImage
+                var path = ("wwwroot/images/product-details/"+product.ImageUrl);
+                FileStream fs = new FileStream(path, FileMode.Create) ;
+
+
+                /*if (!file.Exists(path))
+                {
+                    // Create a file to write to.
+                    using (StreamWriter sw = file.CreateText(path))
+                    {
+                        sw.WriteLine("Hello");
+                        sw.WriteLine("And");
+                        sw.WriteLine("Welcome");
+                    }
+                }*/
+                var reclameContent = new byte[fs.Length];
+                fs.Read(reclameContent, 0, Convert.ToInt32(fs.Length));
+
+
+                var myconnection = new SqlConnection();
+                SqlCommand comm = myconnection.CreateCommand();
+                comm.CommandType = CommandType.StoredProcedure;
+                /*SqlConnection sqlConnection = new SqlConnection($"../wwwroot/images/product - details/{product.ImageUrl}");
+                comm.Connection = sqlConnection;*/
+                comm.CommandText = $"~/wwwroot/images/product-details/{product.ImageUrl}";
+                comm.Parameters.AddWithValue($"~/wwwroot/images/product-details/{product.ImageUrl}", reclameContent);
+                fs.Close();
+                //comm.ExecuteNonQuery();
+                
+                #endregion
+
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -74,6 +115,8 @@ namespace WebStoreCoreApplication.Areas.Admin.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categorys, "Id", "Id", product.CategoryId);
             return View(product);
         }
+
+        
 
         // GET: Admin/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)

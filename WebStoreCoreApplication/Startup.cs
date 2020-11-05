@@ -16,6 +16,7 @@ using WebStoreCoreApplication.Controllers.Infrastructure;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 using WebStoreCoreApplication.Controllers.Infrastructure.Services;
 using WebStoreCoreApplication.Domain.Entities;
+using WebStoreCoreApplication.ViewModels;
 
 //using WebStoreCoreApplication.Infrastructure.Services;
 
@@ -79,6 +80,7 @@ namespace WebStoreCoreApplication
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICartService, CookieCartService>();
+            //services.AddScoped<UserOrderViewModel>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

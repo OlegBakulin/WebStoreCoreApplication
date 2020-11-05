@@ -10,7 +10,7 @@ using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 namespace WebStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admins")]
+    [Authorize(Roles = "Admin")]
     public class BaseController : Controller
     {
         private readonly IProductServices _productService;
