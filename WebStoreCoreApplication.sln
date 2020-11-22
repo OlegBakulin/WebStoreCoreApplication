@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStoreCoreApplicatioc.DAL", "WebStoreCoreApplicatioc.DAL\WebStoreCoreApplicatioc.DAL.csproj", "{8DC31F2B-674B-45CB-A1E4-B854376F61C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7B19DF65-9390-46CA-BB4B-5F4A187CCA78} = {7B19DF65-9390-46CA-BB4B-5F4A187CCA78}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStoreCoreApplication.Domain", "WebStoreCoreApplication.Domain\WebStoreCoreApplication.Domain.csproj", "{7B19DF65-9390-46CA-BB4B-5F4A187CCA78}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStoreCoreApplication", "WebStoreCoreApplication\WebStoreCoreApplication.csproj", "{C51BAB85-3295-4EF2-9DCF-BCEBC4BE63DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8DC31F2B-674B-45CB-A1E4-B854376F61C9} = {8DC31F2B-674B-45CB-A1E4-B854376F61C9}
+		{7B19DF65-9390-46CA-BB4B-5F4A187CCA78} = {7B19DF65-9390-46CA-BB4B-5F4A187CCA78}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

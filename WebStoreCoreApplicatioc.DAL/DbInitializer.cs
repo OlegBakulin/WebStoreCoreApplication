@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Data.Sql;
+using System.Data.Entity;
 
 namespace WebStoreCoreApplicatioc.DAL
 {
@@ -409,11 +413,10 @@ namespace WebStoreCoreApplicatioc.DAL
                 {
                     context.Categorys.Add(section);
                 }
-
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Categories] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] OFF");
-                trans.Commit();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Categories] OFF");
+                context.Database.CommitTransaction();
             }
 
             
@@ -424,10 +427,10 @@ namespace WebStoreCoreApplicatioc.DAL
                     context.Brands.Add(brand);
                 }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brand] ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Brand] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brand] OFF");
-                trans.Commit();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Brand] OFF");
+                context.Database.CommitTransaction();
             }
 
             
@@ -437,10 +440,10 @@ namespace WebStoreCoreApplicatioc.DAL
                 {
                     context.Products.Add(product);
                 }
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
-                trans.Commit();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                context.Database.CommitTransaction();
             }
         }
 

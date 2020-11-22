@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+п»їusing System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +12,6 @@ using WebStoreCoreApplication.Controllers.Infrastructure;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 using WebStoreCoreApplication.Controllers.Infrastructure.Services;
 using WebStoreCoreApplication.Domain.Entities;
-using WebStoreCoreApplication.ViewModels;
 
 //using WebStoreCoreApplication.Infrastructure.Services;
 
@@ -49,7 +44,7 @@ namespace WebStoreCoreApplication
                 .AddEntityFrameworkStores<WebStoreContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options => // необязательно
+            services.Configure<IdentityOptions>(options => // РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ
             {
                 // Password settings
                 options.Password.RequireDigit = false;
@@ -68,7 +63,7 @@ namespace WebStoreCoreApplication
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.ConfigureApplicationCookie(options => // необязательно
+            services.ConfigureApplicationCookie(options => // РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
@@ -124,7 +119,7 @@ namespace WebStoreCoreApplication
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Привет из конвейера обработки запроса (метод app.Run())");
+                await context.Response.WriteAsync("РџСЂРёРІРµС‚ РёР· РєРѕРЅРІРµР№РµСЂР° РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїСЂРѕСЃР° (РјРµС‚РѕРґ app.Run())");
             });
         }
 
