@@ -31,9 +31,7 @@ namespace WebStoreCoreApplication.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
 
-            var loginResult =
-                await _signInManager
-                    .PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            var loginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
             if (!loginResult.Succeeded)
             {
@@ -46,14 +44,16 @@ namespace WebStoreCoreApplication.Controllers
                 return Redirect(model.ReturnUrl);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Base");
         }
+
 
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
@@ -74,15 +74,17 @@ namespace WebStoreCoreApplication.Controllers
             }
 
             await _signInManager.SignInAsync(user, false);
-
-            return RedirectToAction("Index", "Home");
+            await _userManager.AddToRoleAsync(user, "User");
+            return RedirectToAction("Index", "Base");
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
+        [Route("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Base");
         }
     }
 }

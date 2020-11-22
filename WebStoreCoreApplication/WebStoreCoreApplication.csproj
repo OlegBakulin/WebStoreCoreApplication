@@ -5,17 +5,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Account\Logout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\fontawesome-webfont.svg" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\fontawesome-webfont.woff" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\fonts\FontAwesome.otf" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Base\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Base\Index2.cshtml" />
+    <None Include="Areas\Admin\Views\Base\Index3.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <None Include="Views\Account\Logout.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
+    <None Include="Views\Cart\Details.cshtml" />
+    <None Include="Views\Cart\OrderConfirmed.cshtml" />
+    <None Include="Views\Cart\_OrderPartial.cshtml" />
+    <None Include="Views\Profile\Index.cshtml" />
+    <None Include="Views\Profile\Orders.cshtml" />
+    <None Include="Views\Profile\Partial\_ProfileLayout.cshtml" />
+    <None Include="Views\Profile\Partial\_ProfileMenu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
@@ -27,6 +51,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
@@ -45,6 +70,13 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Areas\Admin\Models\" />
+    <Folder Include="wwwroot\Areas\Admin\Data\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
 

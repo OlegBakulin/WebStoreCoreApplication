@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using WebStoreCoreApplication.Domain.Entities;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace WebStoreCoreApplicatioc.DAL
 {
-    public class DbInitializer
+    public static class DbInitializer
     {
-        public static void Initializer(WebStoreContext context)
+        public static void Initialize(WebStoreContext context)
         {
             context.Database.EnsureCreated();
             if (context.Products.Any())
@@ -440,5 +443,46 @@ namespace WebStoreCoreApplicatioc.DAL
                 trans.Commit();
             }
         }
+
+        public static void InitializeUsers(IServiceProvider services)
+        {
+            var roleManager = services.GetService<RoleManager<IdentityRole>>();
+            EnsureRole(roleManager, "User");
+            EnsureRole(roleManager, "Manager");
+            EnsureRole(roleManager, "Admin");
+            EnsureRole(roleManager, "Boss");
+
+            EnsureRoleToUser(services, "Administrator", "Admin", "administrator@123");
+        }
+
+        private static void EnsureRoleToUser(IServiceProvider services, string userName, string roleName, string password)
+        {
+            var userManager = services.GetService<UserManager<User>>();
+            var userStore = services.GetService<IUserStore<User>>();
+
+            if (userStore.FindByNameAsync(userName, CancellationToken.None).Result != null)
+            {
+                return;
+            }
+
+            var admin = new User
+            {
+                UserName = userName,
+                Email = $"{userName}@domain.com"
+            };
+
+            if (userManager.CreateAsync(admin, password).Result.Succeeded)
+                userManager.AddToRoleAsync(admin, roleName).Wait();
+        }
+
+        private static void EnsureRole(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            if (!roleManager.RoleExistsAsync(roleName).Result)
+            {
+                roleManager.CreateAsync(new IdentityRole(roleName)).Wait();
+            }
+        }
+
+        
     }
 }

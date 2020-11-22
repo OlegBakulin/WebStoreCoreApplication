@@ -16,6 +16,7 @@ using WebStoreCoreApplication.Controllers.Infrastructure;
 using WebStoreCoreApplication.Controllers.Infrastructure.Interfaces;
 using WebStoreCoreApplication.Controllers.Infrastructure.Services;
 using WebStoreCoreApplication.Domain.Entities;
+using WebStoreCoreApplication.ViewModels;
 
 //using WebStoreCoreApplication.Infrastructure.Services;
 
@@ -28,7 +29,7 @@ namespace WebStoreCoreApplication
         {
             _configuration = configuration;
         }
-       
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -39,8 +40,10 @@ namespace WebStoreCoreApplication
 
             services.AddSingleton<IEmployeeService, InMemoryEmployeeServices>();
             services.AddScoped<IProductServices, SqlProductService>();
-            
-            services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IOrdersService, SqlOrdersService>();
+
+            services.AddDbContext<WebStoreContext>(options => options
+                .UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<WebStoreContext>()
@@ -75,6 +78,9 @@ namespace WebStoreCoreApplication
                 options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
                 options.SlidingExpiration = true;
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICartService, CookieCartService>();
+            //services.AddScoped<UserOrderViewModel>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,21 +92,66 @@ namespace WebStoreCoreApplication
 
             app.UseStaticFiles();
 
-            var hello = _configuration["CustomeHelloWorld"];
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            var hello = _configuration["CustomHelloWorld"];
+           
+            app.Map("/index", CustomIndexHandler);
+
+            UseMiddlewareSample(app);
+
+            app.UseMiddleware<TokenMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Base}/{action=Index}/{id?}");
+
+                //endpoints.MapDefaultControllerRoute(); 
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Base}/{action=Index}/{id?}");
-                /*
-                 * endpoints.MapGet("/", async context =>
+
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync(hello);
+                //});
+            });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Привет из конвейера обработки запроса (метод app.Run())");
+            });
+        }
+
+        private void UseMiddlewareSample(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                bool isError = false;
+                // ...
+                if (isError)
                 {
-                    await context.Response.WriteAsync(hello);
-                });
-                */
+                    await context.Response
+                        .WriteAsync("Error occured. You're in custom pipeline module...");
+                }
+                else
+                {
+                    await next.Invoke();
+                }
+                
+            });
+        }
+
+        private void CustomIndexHandler(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Index custom handler...");
             });
         }
     }

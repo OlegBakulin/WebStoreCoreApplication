@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/WebStoreCoreApplication/wwwroot/lib/twitter-bootstrap/css/site.min.css
+/WebStoreCoreApplication/wwwroot/lib/twitter-bootstrap/js/site.min.js
+/WebStoreCoreApplication/wwwroot/lib/twitter-bootstrap/js/site.min.js.map

@@ -8,5 +8,6 @@ namespace WebStoreCoreApplication.Controllers.Infrastructure.Interfaces
         IEnumerable<Category> GetCategories();
         IEnumerable<Brand> GetBrands();
         IEnumerable<Product> GetProducts(ProductFilter filter);
+        Product GetProductById(int id);
     }
 }

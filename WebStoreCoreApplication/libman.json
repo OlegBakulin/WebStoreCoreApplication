@@ -4,7 +4,12 @@
   "libraries": [
     {
       "library": "jquery@2.2.0",
-      "destination": "wwwroot/lib/jquery/"
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.js",
+        "jquery.min.js",
+        "jquery.min.map"
+      ]
     },
     {
       "library": "twitter-bootstrap@3.3.7",

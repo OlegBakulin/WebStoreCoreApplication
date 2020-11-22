@@ -17,17 +17,17 @@
                             <a asp-controller="Base" asp-action="Index" class="active">Home</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                            <a asp-controller="Catalog" asp-action="Shop">Shop<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a asp-controller="Catalog" asp-action="Shop">Products</a></li>
-                                <li><a asp-controller="Catalog" asp-action="ProductDetails">Product Details</a></li>
+                                @*<li><a asp-controller="Catalog" asp-action="ProductDetails">Product Details</a></li>*@
                                 <li><a asp-controller="Base" asp-action="Checkout">Checkout</a></li>
-                                <li><a asp-controller="Base" asp-action="Cart">Cart</a></li>
-                                <li><a asp-controller="Base" asp-action="Login">Login</a></li>
+                                <li><a asp-controller="Cart" asp-action="Details">Cart</a></li>
+                                @*<li><a asp-controller="Account" asp-action="Login">Login</a></li>*@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                            <a asp-controller="Base" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a asp-controller="Base" asp-action="Blog">Blog List</a></li>
                                 <li><a asp-controller="Base" asp-action="Blog_Single">Blog Single</a></li>

@@ -181,17 +181,71 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentCategoryID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentCategoryID");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Product", b =>
@@ -202,12 +256,6 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BrandIdForeigen")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryIDForeigen")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -222,17 +270,14 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandIdForeigen");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("CategoryIDForeigen");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -357,18 +402,38 @@ namespace WebStoreCoreApplicatioc.DAL.Migrations
                 {
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "ParentCategory")
                         .WithMany()
-                        .HasForeignKey("ParentCategoryID");
+                        .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.OrderItem", b =>
+                {
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("WebStoreCoreApplication.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("WebStoreCoreApplication.Domain.Entities.Product", b =>
                 {
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandIdForeigen");
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("WebStoreCoreApplication.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryIDForeigen");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

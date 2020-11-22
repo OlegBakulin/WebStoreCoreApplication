@@ -14,5 +14,7 @@ namespace WebStoreCoreApplicatioc.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

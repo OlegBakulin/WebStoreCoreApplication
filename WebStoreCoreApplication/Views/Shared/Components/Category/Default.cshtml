@@ -20,9 +20,10 @@
                             <ul>
                                 @foreach (var childCategory in parentCategory.ChildCategories)
                                 {
-                                    <li><a asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@childCategory.Id">
-    @childCategory.Name
-</a></li>
+                                    <li>
+                                <a asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@childCategory.Id">
+                                     @childCategory.Name
+                                </a></li>
                                 }
                             </ul>
                         </div>
